@@ -1,4 +1,4 @@
-import { GameQuery } from "../App";
+import useGameQueryStore from "../store";
 import useData from "./useData";
 
 export interface Platform {
@@ -16,8 +16,10 @@ export interface Game {
   rating_top: number;
 }
 
-const useGames = (gameQuery: GameQuery) =>
-  useData<Game>(
+const useGames = () => {
+  const gameQuery = useGameQueryStore((s) => s.gameQuery);
+
+  return useData<Game>(
     "/games",
     {
       params: {
@@ -29,5 +31,5 @@ const useGames = (gameQuery: GameQuery) =>
     },
     [gameQuery]
   );
-
+};
 export default useGames;
